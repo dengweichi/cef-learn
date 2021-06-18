@@ -3,9 +3,7 @@
 // can be found in the LICENSE file.
 
 #include "./simple_handler.h"
-
 #include <windows.h>
-#include <string>
 
 #include "cef_browser.h"
 
@@ -13,5 +11,5 @@ void SimpleHandler::PlatformTitleChange(CefRefPtr<CefBrowser> browser,
                                         const CefString& title) {
   CefWindowHandle hwnd = browser->GetHost()->GetWindowHandle();
   if (hwnd)
-    SetWindowText(hwnd, TEXT(reinterpret_cast<LPCSTR>(title.c_str())));
+    SetWindowTextW(hwnd, title.c_str());
 }

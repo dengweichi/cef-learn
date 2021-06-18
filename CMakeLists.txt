@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.7)
+﻿cmake_minimum_required(VERSION 3.7)
 
 project(cef_learn)
 
@@ -6,12 +6,14 @@ project(cef_learn)
 
 set(CMAKE_CXX_STANDARD 14)
 
+# 设置cmake
+add_compile_options(-utf-8)
 
 include_directories(./cef)
 include_directories(./cef/include)
 
 add_executable( ${PROJECT_NAME} WIN32
-        ./src/cefsimple_win.cc
+        ./src/main.cc
         ./src/resource.h
         ./src/simple_app.cc
         ./src/simple_app.h
@@ -29,10 +31,13 @@ if (CMAKE_BUILD_TYPE STREQUAL "Release")
 elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_link_libraries( ${PROJECT_NAME}  ${WINDOW_LINK_LIB}  ${PROJECT_SOURCE_DIR}/cef/lib/debug/libcef.lib ${PROJECT_SOURCE_DIR}/cef/lib/debug/libcef_dll_wrapper.lib)
 else()
-    message(STATUS "只支持 Release/Debug")
+    message(SEND_ERROR "only support Release/Debug mode")
 endif()
 
-
+# 操作系统判断，当前改项目只支持windows系统
+if(NOT(CMAKE_SYSTEM_NAME STREQUAL "Windows"))
+    message(SEND_ERROR "only support windows system")
+endif()
 
 
 # 链接 mainfest文件
